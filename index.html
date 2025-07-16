@@ -3,279 +3,414 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Malla Curricular Carlos - Diseño Industrial</title>
-<style>
-  :root {
-    --purpura: #800080;
-    --malva: #E0B0FF;
-    --canario: #FFFF99;
-    --narciso: #F9A602;
-    --olivo: #808000;
-    --bg: #fff9f9;
-  }
+<title>Malla Interactiva - Carlos UBA-FADU 💜</title>
 
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* Reset y base */
+  * {
+    box-sizing: border-box;
+  }
   body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--malva), var(--canario));
-    min-height: 100vh;
+    margin: 0; padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffffe0 100%);
     color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   h1 {
-    background-color: var(--purpura);
-    color: white;
-    text-align: center;
-    padding: 1.5rem 0;
-    margin: 0;
-    font-weight: 900;
-    font-size: 2.8rem;
-  }
-  .mensaje {
-    text-align: center;
-    font-size: 1.3rem;
-    color: var(--olivo);
-    margin: 1rem 0 0;
-    font-style: italic;
+    color: #800080;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    user-select: none;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px #e0b0ffcc;
   }
   #contenedor {
-    max-width: 1100px;
-    margin: 2rem auto 4rem;
-    padding: 0 1rem;
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2rem 3rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(128, 0, 128, 0.15);
+    backdrop-filter: blur(12px);
   }
-  .semestre {
-    margin-bottom: 3rem;
+  .bloque-semestre {
+    margin-bottom: 3.5rem;
   }
-  .semestre > h2 {
-    border-left: 6px solid var(--narciso);
+  .bloque-semestre > h2 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #800080;
+    border-left: 8px solid #800080;
     padding-left: 1rem;
-    color: var(--purpura);
-    font-weight: 700;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  .materias {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-    gap: 18px;
-  }
-  .materia {
-    background: var(--bg);
-    border: 3px solid var(--purpura);
-    border-radius: 16px;
-    padding: 1rem;
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
+    margin-bottom: 1.5rem;
     user-select: none;
+    text-shadow: 1px 1px 2px #e0b0ffaa;
+  }
+
+  .materias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 22px;
+  }
+
+  .materia {
+    background: rgba(255,255,255,0.7);
+    border-radius: 20px;
+    padding: 1.2rem 1rem 2rem 1rem;
+    box-shadow:
+      0 8px 16px rgba(128, 0, 128, 0.15),
+      inset 0 0 60px rgba(224, 176, 255, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     position: relative;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition:
-      background-color 0.4s ease,
-      border-color 0.4s ease,
-      box-shadow 0.4s ease,
-      transform 0.3s ease;
+    user-select: none;
+    border: 3px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
   }
   .materia:hover:not(.bloqueada) {
-    box-shadow: 0 0 18px 5px var(--purpura);
-    transform: scale(1.07);
+    transform: translateY(-6px);
+    box-shadow:
+      0 15px 35px rgba(128, 0, 128, 0.35),
+      inset 0 0 80px rgba(224, 176, 255, 0.25);
+    background: linear-gradient(145deg, #ffff99dd 0%, #f9a602cc 100%);
+    border-color: #800080cc;
   }
   .materia.bloqueada {
-    border-color: var(--malva);
-    background-color: var(--malva);
-    color: #888;
-    cursor: default;
+    background: #E0B0FF;
+    color: #6a518f;
     box-shadow: none;
-    filter: grayscale(90%);
+    cursor: default;
+    border-color: #c7b3e2;
   }
   .materia.aprobada {
-    border-color: var(--narciso);
-    background-color: var(--narciso);
+    background: linear-gradient(135deg, #f9a602ee, #f9a602cc);
     color: #3a1a00;
-    box-shadow: 0 0 18px 5px var(--narciso);
-  }
-  .materia .nota {
-    margin-top: 0.7rem;
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--olivo);
-  }
-  .materia input.nota-input {
-    width: 60px;
-    margin-top: 0.7rem;
     font-weight: 700;
-    font-size: 1.1rem;
-    padding: 4px 8px;
-    border-radius: 8px;
-    border: 2px solid var(--olivo);
-    text-align: center;
+    box-shadow: 0 0 24px 8px #f9a602cc;
+    border-color: #800080;
   }
+
+  .materia > div:first-child {
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+    color: inherit;
+    text-shadow: 0 0 2px #fff7;
+  }
+  .descripcion {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: inherit;
+    line-height: 1.2;
+    user-select: text;
+    flex-grow: 1;
+  }
+  .input-nota {
+    margin-top: 12px;
+    width: 70px;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 12px;
+    border: 2.5px solid #800080;
+    outline: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    background: #fff;
+  }
+  .input-nota:focus {
+    border-color: #f9a602;
+    background: #fff8c6;
+  }
+
+  .gatito {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 2.4rem;
+    pointer-events: none;
+    user-select: none;
+    font-weight: 900;
+    color: #800080dd;
+    text-shadow:
+      -1px -1px 3px #fff,
+      1px -1px 3px #fff,
+      -1px 1px 3px #fff,
+      1px 1px 3px #fff;
+    transition: transform 0.3s ease;
+  }
+  .materia:hover .gatito {
+    transform: scale(1.15);
+  }
+
+  #mensaje {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #800080dd;
+    background: rgba(224, 176, 255, 0.2);
+    border-radius: 20px;
+    padding: 0.8rem 1rem;
+    max-width: 700px;
+    text-align: center;
+    user-select: none;
+    box-shadow: 0 0 18px 6px #e0b0ff88;
+    min-height: 70px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Responsive */
+  @media (max-width: 450px) {
+    .materias-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+    .input-nota {
+      width: 50px;
+      font-size: 0.85rem;
+    }
+    .materia {
+      min-height: 130px;
+    }
+  }
+
 </style>
 </head>
 <body>
-  <h1>Malla Curricular Carlos - Diseño Industrial UBA - FADU</h1>
+  <h1>Malla Interactiva - Carlos UBA-FADU 💜</h1>
   <div id="contenedor"></div>
-  <div class="mensaje" id="mensaje"></div>
+  <div id="mensaje"></div>
 
 <script>
+  // Datos de materias y requisitos
   const materias = [
-    { nombre: "Nivelación (CBC)", requisitos: [], anio: "Nivelación" },
+    { nombre: "Nivelación", anio: "Nivelación", descripcion:"Requisito para ingresar a Primer Año", requisitos: [] },
+    { nombre: "Proyectual 1", anio: "Nivelación", descripcion:"Material Cuatrimestral sin examen final", requisitos: ["Nivelación"] },
+    { nombre: "Proyectual 2", anio: "Nivelación", descripcion:"Material Cuatrimestral sin examen final", requisitos: ["Nivelación"] },
+    { nombre: "Dibujo", anio: "Nivelación", descripcion:"Material Anual sin examen final", requisitos: ["Nivelación"] },
+    { nombre: "Sociedad Y Estado", anio: "Nivelación", descripcion:"Materia Cuatrimestral con examen final", requisitos: ["Nivelación"] },
+    { nombre: "Pensamiento Cientifico", anio: "Nivelación", descripcion:"Materia Cuatrimestral con examen final", requisitos: ["Nivelación"] },
+    { nombre: "Matemática", anio: "Nivelación", descripcion:"Materia Cuatrimestral con examen final", requisitos: ["Nivelación"] },
+    { nombre: "Semiología", anio: "Nivelación", descripcion:"Materia Cuatrimestral con examen final", requisitos: ["Nivelación"] },
 
-    { nombre: "Proyectual 1", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Proyectual 2", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Dibujo", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Sociedad Y Estado", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Pensamiento Cientifico", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Matemática", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
-    { nombre: "Semiología", requisitos: ["Nivelación (CBC)"], anio: "Nivelación" },
+    { nombre: "TDI1", anio: "1er Año", descripcion:"Taller Diseño Industrial 1 - Materia Anual sin examen final", requisitos: ["Proyectual 1", "Proyectual 2", "Dibujo", "Sociedad Y Estado", "Pensamiento Cientifico", "Matemática", "Semiología"] },
+    { nombre: "M1", anio: "1er Año", descripcion:"Morgología 1 - Materia Anual sin examen final", requisitos: ["TDI1"] },
+    { nombre: "AP", anio: "1er Año", descripcion:"Análisis de Productos - Materia Anual sin examen final", requisitos: ["TDI1"] },
+    { nombre: "T1", anio: "1er Año", descripcion:"Tecnología 1 - Material Anual con examen final", requisitos: ["TDI1"] },
+    { nombre: "MAT1", anio: "1er Año", descripcion:"Matemática 1 - Material Cuatrimestral con examen final", requisitos: ["TDI1"] },
+    { nombre: "F1", anio: "1er Año", descripcion:"Física 1 - Material Cuatrimestral con examen final", requisitos: ["TDI1"] },
 
-    { nombre: "TDI1 - Taller Diseño Industrial 1", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
-    { nombre: "M1 - Morgología 1", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
-    { nombre: "AP - Análisis de Productos", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
-    { nombre: "T1 - Tecnología 1", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
-    { nombre: "MAT1 - Matemática 1", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
-    { nombre: "F1 - Física 1", requisitos: ["Proyectual 1","Proyectual 2","Dibujo","Sociedad Y Estado","Pensamiento Cientifico","Matemática","Semiología"], anio: "Primer Año" },
+    { nombre: "TDI2", anio: "2do Año", descripcion:"Taller Diseño Industrial 2 - Materia Anual sin examen final", requisitos: ["TDI1", "AP", "T1"] },
+    { nombre: "M2", anio: "2do Año", descripcion:"Morgología 2 - Materia Anual sin examen final", requisitos: ["TDI1", "M1"] },
+    { nombre: "T2", anio: "2do Año", descripcion:"Tecnología 2 - Material anual con examen final", requisitos: ["T1", "F1"] },
+    { nombre: "Ergo", anio: "2do Año", descripcion:"Ergonomía y Factores Humanos - Materia Cuatrimestral con examen final", requisitos: ["AP", "TDI1", "F1"] },
+    { nombre: "HD1", anio: "2do Año", descripcion:"Historia del Diseño Industrial 1 - Materia Cuatrimestral con examen final", requisitos: ["TDI1"] },
 
-    { nombre: "TDI2 - Taller Diseño Industrial 2", requisitos: ["TDI1 - Taller Diseño Industrial 1","AP - Análisis de Productos","T1 - Tecnología 1"], anio: "Segundo Año" },
-    { nombre: "M2 - Morgología 2", requisitos: ["TDI1 - Taller Diseño Industrial 1","M1 - Morgología 1"], anio: "Segundo Año" },
-    { nombre: "T2 - Tecnología 2", requisitos: ["T1 - Tecnología 1","F1 - Física 1"], anio: "Segundo Año" },
-    { nombre: "Ergo - Ergonomía y Factores Humanos", requisitos: ["AP - Análisis de Productos","TDI1 - Taller Diseño Industrial 1","F1 - Física 1"], anio: "Segundo Año" },
-    { nombre: "HD1 - Historia del Diseño Industrial", requisitos: ["Nivelación (CBC)"], anio: "Segundo Año" },
+    { nombre: "TDI3", anio: "3er Año", descripcion:"Taller Diseño Industrial 3 - Materia Anual sin examen final", requisitos: ["TDI2", "M1", "T2", "Ergo", "MAT1", "F1"] },
+    { nombre: "M3", anio: "3er Año", descripcion:"Morgología 3 - Materia Anual sin examen final", requisitos: ["TDI2", "M2", "T1", "MAT1", "F1"] },
+    { nombre: "T3", anio: "3er Año", descripcion:"Tecnología 3 - Material anual con examen final", requisitos: ["TDI1", "M1", "MAT1", "T1", "F1", "AP", "T2"] },
+    { nombre: "F2", anio: "3er Año", descripcion:"Física 2 - Materia Cuatrimestral con examen final", requisitos: ["TDI1", "M1", "MAT1", "T1", "F1", "AP"] },
+    { nombre: "HDI2", anio: "3er Año", descripcion:"Historia del Diseño Industrial 2 - Materia Cuatrimestral con examen final", requisitos: ["TDI1", "M1", "T1", "AP", "HD1", "MAT1", "F1"] },
 
-    { nombre: "TDI3 - Taller Diseño Industrial 3", requisitos: ["TDI2 - Taller Diseño Industrial 2","M1 - Morgología 1","T2 - Tecnología 2","Ergo - Ergonomía y Factores Humanos","MAT1 - Matemática 1","F1 - Física 1"], anio: "Tercer Año" },
-    { nombre: "M3 - Morgología 3", requisitos: ["TDI2 - Taller Diseño Industrial 2","M2 - Morgología 2","T1 - Tecnología 1","MAT1 - Matemática 1","F1 - Física 1"], anio: "Tercer Año" },
-    { nombre: "T3 - Tecnología 3", requisitos: ["TDI1 - Taller Diseño Industrial 1","M1 - Morgología 1","MAT1 - Matemática 1","T1 - Tecnología 1","F1 - Física 1","AP - Análisis de Productos","T2 - Tecnología 2"], anio: "Tercer Año" },
-    { nombre: "F2 - Física 2", requisitos: ["TDI1 - Taller Diseño Industrial 1","M1 - Morgología 1","MAT1 - Matemática 1","T1 - Tecnología 1","F1 - Física 1","AP - Análisis de Productos"], anio: "Tercer Año" },
-    { nombre: "HDI2 - Historia del Diseño Industrial 2", requisitos: ["TDI1 - Taller Diseño Industrial 1","M1 - Morgología 1","T1 - Tecnología 1","AP - Análisis de Productos","HD1 - Historia del Diseño Industrial","MAT1 - Matemática 1","F1 - Física 1"], anio: "Tercer Año" },
+    { nombre: "TDI4", anio: "4to Año", descripcion:"Taller Diseño Industrial 4 - Materia Anual sin examen final", requisitos: ["TDI3", "M2", "T3", "F2", "Ergo", "HD1", "T2"] },
+    { nombre: "T4", anio: "4to Año", descripcion:"Tecnología 4 - Material anual con examen final", requisitos: ["M2", "TDI2", "T2", "Ergo", "T3", "F2", "HD1"] },
+    { nombre: "SAD", anio: "4to Año", descripcion:"Sociología Aplicada al Diseño - Materia Cuatrimestral con examen final", requisitos: ["TDI2", "T2", "M2", "Ergo", "HD1", "HDI2"] },
+    { nombre: "GI", anio: "4to Año", descripcion:"Gestión Industrial - Materia Cuatrimestral con examen final", requisitos: ["TDI2", "T2", "M2", "Ergo", "HD1", "HDI2"] },
 
-    { nombre: "TDI4 - Taller Diseño Industrial 4", requisitos: ["TDI3 - Taller Diseño Industrial 3","M2 - Morgología 2","T3 - Tecnología 3","F2 - Física 2","Ergo - Ergonomía y Factores Humanos","HD1 - Historia del Diseño Industrial","T2 - Tecnología 2"], anio: "Cuarto Año" },
-    { nombre: "T4 - Tecnología 4", requisitos: ["M2 - Morgología 2","TDI2 - Taller Diseño Industrial 2","T2 - Tecnología 2","Ergo - Ergonomía y Factores Humanos","T3 - Tecnología 3","F2 - Física 2","HD1 - Historia del Diseño Industrial"], anio: "Cuarto Año" },
-    { nombre: "SAD - Sociología Aplicada al Diseño", requisitos: ["TDI2 - Taller Diseño Industrial 2","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","HD1 - Historia del Diseño Industrial","HDI2 - Historia del Diseño Industrial 2"], anio: "Cuarto Año" },
-    { nombre: "GI - Gestión Industrial", requisitos: ["TDI2 - Taller Diseño Industrial 2","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","HD1 - Historia del Diseño Industrial","HDI2 - Historia del Diseño Industrial 2"], anio: "Cuarto Año" },
+    { nombre: "PF", anio: "5to Año", descripcion:"Proyecto Final - Materia Anual sin examen final", requisitos: ["TDI4", "T3", "F2", "HDI2", "M3", "T4"] },
+    { nombre: "MID", anio: "5to Año", descripcion:"Metodología - Material anual con examen final", requisitos: ["M2", "TDI2", "T2", "Ergo", "T3", "F2", "HD1"] },
+    { nombre: "GP", anio: "5to Año", descripcion:"Gestión de Proyecto - Material anual con examen final", requisitos: ["M2", "TDI2", "T2", "Ergo", "T3", "F2", "HD1"] },
+    { nombre: "PPA", anio: "5to Año", descripcion:"PPA - Material anual con examen final", requisitos: ["TDI3", "T2", "M2", "Ergo", "HD1", "F2", "HDI2"] },
+    { nombre: "LG", anio: "5to Año", descripcion:"Legislación - Materia Cuatrimestral con examen final", requisitos: ["TDI3", "T2", "M3", "Ergo", "HD1", "F2", "T3", "HDI2"] },
 
-    { nombre: "PF - Proyecto Final", requisitos: ["TDI4 - Taller Diseño Industrial 4","T3 - Tecnología 3","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2","M3 - Morgología 3","T4 - Tecnología 4"], anio: "Quinto Año" },
-    { nombre: "MID - Metodología", requisitos: ["M2 - Morgología 2","TDI2 - Taller Diseño Industrial 2","T2 - Tecnología 2","Ergo - Ergonomía y Factores Humanos","T3 - Tecnología 3","F2 - Física 2","HD1 - Historia del Diseño Industrial"], anio: "Quinto Año" },
-    { nombre: "GP - Gestión de Proyecto", requisitos: ["M2 - Morgología 2","TDI2 - Taller Diseño Industrial 2","T2 - Tecnología 2","Ergo - Ergonomía y Factores Humanos","T3 - Tecnología 3","F2 - Física 2","HD1 - Historia del Diseño Industrial"], anio: "Quinto Año" },
-    { nombre: "PPA - PPA", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","HD1 - Historia del Diseño Industrial","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Quinto Año" },
-    { nombre: "LG - Legislación", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M3 - Morgología 3","Ergo - Ergonomía y Factores Humanos","HD1 - Historia del Diseño Industrial","F2 - Física 2","T3 - Tecnología 3","HDI2 - Historia del Diseño Industrial 2"], anio: "Quinto Año" },
-
-    { nombre: "Diseño de Interfases y Gráfica Aplicada a Productos", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Mercadotecnia y Gestión Empresaria", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Aspectos Económicos del Diseño", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Diseño e Innovación", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Diseño para la Sustentabilidad", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Ergonomía y Experiencia de Usuario", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Optativa 1", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
-    { nombre: "Optativa 2", requisitos: ["TDI3 - Taller Diseño Industrial 3","T2 - Tecnología 2","M2 - Morgología 2","Ergo - Ergonomía y Factores Humanos","F2 - Física 2","HDI2 - Historia del Diseño Industrial 2"], anio: "Electivas y Optativas" },
+    { nombre: "Diseño de Interfases", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Mercadotecnia", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Aspectos Económicos del Diseño", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Diseño e Innovación", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Diseño para la Sustentabilidad", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Ergonomía y Experiencia de Usuario", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Optativa 1", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
+    { nombre: "Optativa 2", anio: "Electivas y Optativas", descripcion:"Requiere todas las materias de segundo año más TDI3, T2, M2, Ergo, F2, HDI2", requisitos: ["TDI3", "T2", "M2", "Ergo", "F2", "HDI2"] },
   ];
+
+  // Leer estado guardado en localStorage
+  let aprobadas = JSON.parse(localStorage.getItem("aprobadas") || "[]");
+  let notas = JSON.parse(localStorage.getItem("notas") || "{}");
 
   const contenedor = document.getElementById("contenedor");
   const mensaje = document.getElementById("mensaje");
 
-  // Carga aprobadas y notas guardadas
-  let aprobadas = JSON.parse(localStorage.getItem("aprobadas") || "[]");
-  let notas = JSON.parse(localStorage.getItem("notas") || "{}");
+  // Frases amorosas y de aliento con emojis de gatitos
+  const frasesAprobado = [
+    "Eres muy inteligente mi amor 😻✨ ¡Hoy sí hay coito! 😘💜",
+    "¡Lo lograste, cariño! Gatito feliz 😸💜 ¡Te amo mucho! ❤️",
+    "¡Orgullosa de ti, mi amor! 😻 Vamos por más juntos 🥰",
+    "¡Sos una genia! 😺 Ya podemos celebrar con amor y ronroneos 😽",
+  ];
+  const frasesAliento = [
+    "No te desanimes, mi amor 😿 Ya habrá mejores días 💪💜",
+    "Ánimo, mi vida, el gatito triste te acompaña 😿 Pero seguimos 💖",
+    "Eres fuerte, corazón ❤️‍🩹 No dejes que un tropiezo te detenga 🐾",
+    "Sigue adelante, mi amorcito 😽 ¡Yo te apoyo siempre! 💜",
+  ];
 
-  // Función que verifica si una materia puede desbloquearse (todos requisitos aprobados)
-  function puedeDesbloquear(materia) {
-    return materia.requisitos.every(r => aprobadas.includes(r));
+  // Ver si se cumplen requisitos para una materia
+  function estaBloqueada(materia) {
+    for (const req of materia.requisitos) {
+      if (!aprobadas.includes(req)) return true;
+    }
+    return false;
   }
 
-  // Dibuja toda la malla
-  function dibujarMalla() {
-    contenedor.innerHTML = "";
-    let currentAnio = "";
+  function mostrarMensajeAprobado() {
+    const frase = frasesAprobado[Math.floor(Math.random() * frasesAprobado.length)];
+    mensaje.innerHTML = frase;
+  }
+  function mostrarMensajeAliento() {
+    const frase = frasesAliento[Math.floor(Math.random() * frasesAliento.length)];
+    mensaje.innerHTML = frase;
+  }
 
+  // Actualizar estado y localStorage
+  function actualizarEstado(nombre, nota) {
+    nota = parseFloat(nota);
+    if (isNaN(nota)) return; 
+    if (nota >= 4) {
+      if (!aprobadas.includes(nombre)) aprobadas.push(nombre);
+      notas[nombre] = nota;
+      mostrarMensajeAprobado();
+    } else {
+      // Nota menor a 4 = desaprobado
+      aprobadas = aprobadas.filter(m => m !== nombre);
+      notas[nombre] = nota;
+      mostrarMensajeAliento();
+    }
+    localStorage.setItem("aprobadas", JSON.stringify(aprobadas));
+    localStorage.setItem("notas", JSON.stringify(notas));
+    renderizarMaterias();
+  }
+
+  // Agrupar materias por año/nivelación
+  function agruparMateriasPorAnio() {
+    const grupos = {};
     materias.forEach(m => {
-      if (m.anio !== currentAnio) {
-        currentAnio = m.anio;
-        const titulo = document.createElement("h2");
-        titulo.textContent = currentAnio;
-        titulo.classList.add("semestre");
-        contenedor.appendChild(titulo);
-      }
-
-      const div = document.createElement("div");
-      div.classList.add("materia");
-
-      const desbloqueada = puedeDesbloquear(m);
-      const estaAprobada = aprobadas.includes(m.nombre);
-
-      if (!desbloqueada && !estaAprobada) {
-        div.classList.add("bloqueada");
-        div.style.cursor = "default";
-      } else if (estaAprobada) {
-        div.classList.add("aprobada");
-        div.style.cursor = "pointer";
-      } else {
-        div.style.cursor = "pointer";
-      }
-
-      div.textContent = m.nombre;
-
-      // Campo nota si está desbloqueada
-      if (desbloqueada || estaAprobada) {
-        const inputNota = document.createElement("input");
-        inputNota.type = "number";
-        inputNota.min = 0;
-        inputNota.max = 10;
-        inputNota.step = 0.1;
-        inputNota.placeholder = "Nota";
-        inputNota.className = "nota-input";
-        inputNota.value = notas[m.nombre] || "";
-
-        inputNota.addEventListener("change", () => {
-          const val = parseFloat(inputNota.value);
-          if (!isNaN(val) && val >= 0 && val <= 10) {
-            notas[m.nombre] = val;
-            localStorage.setItem("notas", JSON.stringify(notas));
-
-            // Si la nota es >= 4, aprueba
-            if (val >= 4) {
-              if (!aprobadas.includes(m.nombre)) {
-                aprobadas.push(m.nombre);
-                localStorage.setItem("aprobadas", JSON.stringify(aprobadas));
-              }
-            } else {
-              // Si nota es menor, quitar aprobado
-              const index = aprobadas.indexOf(m.nombre);
-              if (index !== -1) {
-                aprobadas.splice(index, 1);
-                localStorage.setItem("aprobadas", JSON.stringify(aprobadas));
-              }
-            }
-            dibujarMalla();
-            mensaje.textContent = `Has actualizado la nota de "${m.nombre}" a ${val}.`;
-          } else {
-            alert("Ingrese una nota válida entre 0 y 10.");
-            inputNota.value = notas[m.nombre] || "";
-          }
-        });
-
-        div.appendChild(document.createElement("br"));
-        div.appendChild(inputNota);
-
-        if (estaAprobada) {
-          const notaSpan = document.createElement("div");
-          notaSpan.className = "nota";
-          notaSpan.textContent = `Aprobada con: ${notas[m.nombre]}`;
-          div.appendChild(notaSpan);
-        }
-      }
-
-      // Contenedor materias por año
-      let contAnio = contenedor.querySelector(`.materias[data-anio="${currentAnio}"]`);
-      if (!contAnio) {
-        contAnio = document.createElement("div");
-        contAnio.classList.add("materias");
-        contAnio.dataset.anio = currentAnio;
-        contenedor.appendChild(contAnio);
-      }
-      contAnio.appendChild(div);
+      if (!grupos[m.anio]) grupos[m.anio] = [];
+      grupos[m.anio].push(m);
     });
+    return grupos;
   }
 
-  dibujarMalla();
+  // Renderizar la malla completa
+  function renderizarMaterias() {
+    contenedor.innerHTML = "";
+    const grupos = agruparMateriasPorAnio();
+
+    for (const anio of Object.keys(grupos).sort((a,b) => {
+      // Orden manual para que Nivelación primero, luego 1er año...Electivas último
+      if (a === "Nivelación") return -1;
+      if (b === "Nivelación") return 1;
+      if (a === "Electivas y Optativas") return 1;
+      if (b === "Electivas y Optativas") return -1;
+      return a.localeCompare(b);
+    })) {
+      const divBloque = document.createElement("div");
+      divBloque.className = "bloque-semestre";
+      const titulo = document.createElement("h2");
+      titulo.textContent = anio;
+      divBloque.appendChild(titulo);
+
+      const grid = document.createElement("div");
+      grid.className = "materias-grid";
+
+      grupos[anio].forEach(m => {
+        const divMat = document.createElement("div");
+        divMat.classList.add("materia");
+
+        const aprobad = aprobadas.includes(m.nombre);
+        const bloquead = estaBloqueada(m);
+        const disponible = !bloquead && !aprobad;
+
+        // Color y clase según estado
+        if (aprobad) {
+          divMat.classList.add("aprobada");
+        } else if (bloquead) {
+          divMat.classList.add("bloqueada");
+        } else {
+          divMat.classList.add("disponible");
+        }
+
+        // Nombre materia
+        const nombreMat = document.createElement("div");
+        nombreMat.textContent = m.nombre;
+        nombreMat.title = m.descripcion + (m.requisitos.length > 0 ? "\nRequiere: " + m.requisitos.join(", ") : "\nSin requisitos");
+        divMat.appendChild(nombreMat);
+
+        // Descripción pequeña
+        const desc = document.createElement("div");
+        desc.className = "descripcion";
+        desc.textContent = m.descripcion;
+        divMat.appendChild(desc);
+
+        // Input nota solo si está disponible o aprobada (para editar nota)
+        if (disponible || aprobad) {
+          const inputNota = document.createElement("input");
+          inputNota.type = "number";
+          inputNota.min = 1;
+          inputNota.max = 10;
+          inputNota.step = 0.1;
+          inputNota.placeholder = "Nota";
+          inputNota.value = notas[m.nombre] || "";
+          inputNota.className = "input-nota";
+          inputNota.title = "Ingresa la nota (≥4 aprobado)";
+          inputNota.addEventListener("change", e => {
+            const val = e.target.value;
+            if (val === "") return; // no hacer nada si vacio
+            if (val < 1 || val > 10) {
+              alert("La nota debe estar entre 1 y 10");
+              e.target.value = notas[m.nombre] || "";
+              return;
+            }
+            actualizarEstado(m.nombre, val);
+          });
+          divMat.appendChild(inputNota);
+        }
+
+        // Gatito en materias aprobadas
+        if (aprobad) {
+          const gatito = document.createElement("div");
+          gatito.className = "gatito";
+          gatito.textContent = "😻";
+          divMat.appendChild(gatito);
+        }
+
+        // Gatito triste en materias bloqueadas
+        if (bloquead) {
+          const gatito = document.createElement("div");
+          gatito.className = "gatito";
+          gatito.textContent = "😿";
+          divMat.appendChild(gatito);
+        }
+
+        grid.appendChild(divMat);
+      });
+
+      divBloque.appendChild(grid);
+      contenedor.appendChild(divBloque);
+    }
+  }
+
+  renderizarMaterias();
 </script>
 </body>
 </html>
